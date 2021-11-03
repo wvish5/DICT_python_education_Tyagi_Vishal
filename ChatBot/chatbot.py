@@ -30,5 +30,3 @@ while q!=2:
 else:
     print("Completed, have a nice day")
 print("Congratulations, have a nice day!")
-
-
