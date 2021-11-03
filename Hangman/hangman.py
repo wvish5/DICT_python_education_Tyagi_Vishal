@@ -1,7 +1,6 @@
 import random
 print("HANGMAN")
 print("The game will be available soon!")
-#Этап 5
 word = ""
 letter = ""
 a = input()
@@ -57,6 +56,7 @@ while True:
             print('Wrong command!')
     elif type == 'exit':
         break
+
 
 
 
