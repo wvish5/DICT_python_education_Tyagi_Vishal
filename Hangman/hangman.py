@@ -13,29 +13,26 @@ def show(word, letter):
 wordlist = ['python', 'java', 'javascript', 'php']
 n = random.choice(wordlist)
 words = ''
-show(n, words)
 attempt = 8
 
 while attempt != 0:
-
-
-    p = input(" Guess the letter")
-    if p in words:
-        print("No improvements")
-        attempt -= 1
-    else:
-        words += p
-
     sum = show(n, words)
-    if p in n:
-        if sum == 0:
-            print("\nYou win!")
-            break
+    if sum == 0:
+        print("\nYou win!")
+        break
+    p = input(" Guess the letter")
+    if len(p) == 1:
+        if p.istitle():
+            print("Please enter a lowercase English letter")
+        else:
+            if p in words:
+                print("You've already guessed this letter")
+            else:
+                words += p
+            if p not in n:
+                print("The letter doesn't appear in the word")
+                attempt -= 1
+            if attempt == 0:
+                print("You loss")
     else:
-        print("The letter doesn't appear in the word")
-        attempt -= 1
-
-    if attempt == 0:
-        print("You loss")
-
-
+        print("You should input a single letter")
