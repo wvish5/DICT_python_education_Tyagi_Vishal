@@ -17,17 +17,25 @@ show(n, words)
 attempt = 8
 
 while attempt != 0:
+
+
     p = input(" Guess the letter")
-    words += p
+    if p in words:
+        print("No improvements")
+        attempt -= 1
+    else:
+        words += p
+
+    sum = show(n, words)
     if p in n:
         if sum == 0:
             print("\nYou win!")
             break
     else:
-        print("You guessed the wrong letter")
+        print("The letter doesn't appear in the word")
         attempt -= 1
 
     if attempt == 0:
         print("You loss")
-    sum = show(n, words)
+
 
