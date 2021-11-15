@@ -9,30 +9,38 @@ def show(word, letter):
             print('_', end='')
             m += 1
     return m
-
-wordlist = ['python', 'java', 'javascript', 'php']
-n = random.choice(wordlist)
-words = ''
-attempt = 8
-
-while attempt != 0:
-    sum = show(n, words)
-    if sum == 0:
-        print("\nYou win!")
-        break
-    p = input(" Guess the letter")
-    if len(p) == 1:
-        if p.istitle():
-            print("Please enter a lowercase English letter")
-        else:
-            if p in words:
-                print("You've already guessed this letter")
+while True:
+    wordlist = ['python', 'java', 'javascript', 'php']
+    n = random.choice(wordlist)
+    words = ''
+    attempt = 8
+    g = input("Type 'play' to play the game, 'exit' to quit:")
+    if g == 'play':
+        while attempt != 0:
+            sum = show(n, words)
+            if sum == 0:
+                print("\nYou win!")
+                break
+            p = input(" Guess the letter")
+            if len(p) == 1:
+                if p.istitle():
+                    print("Please enter a lowercase English letter")
+                else:
+                    if p in words:
+                        print("You've already guessed this letter")
+                    else:
+                        words += p
+                    if p not in n:
+                        print("The letter doesn't appear in the word")
+                        attempt -= 1
+                    if attempt == 0:
+                        print("You loss")
             else:
-                words += p
-            if p not in n:
-                print("The letter doesn't appear in the word")
-                attempt -= 1
-            if attempt == 0:
-                print("You loss")
+                print("You should input a single letter")
+    elif g == 'exit':
+        break
     else:
-        print("You should input a single letter")
+        print("Wrong command!")
+
+
+
