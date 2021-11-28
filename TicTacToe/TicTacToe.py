@@ -1,31 +1,37 @@
-def seq(inp):
+user_input = list(input("Enter cells: "))
+matrix = []
+k = 0
+def show():
+    global matrix
     print("---------")
-    print("|", " ".join(inp[0:3]), "|")
-    print("|", " ".join(inp[3:6]), "|")
-    print("|", " ".join(inp[6:9]), "|")
+    for i in range(0, 3):
+        print("|", end="")
+        for j in range(0, 3):
+            print(" " + matrix[i][j], end="")
+        print(" |")
     print("---------")
 
-def whowon(inp, var):
-    win = []
-    for x in wins:
-        win.append(len([y for y in x if inp[y] == var]))
-    return win.count(3)
+for i in range (0,3):
+    matrix.append([])
+    for j in range (0,3):
+        matrix[i].append(user_input[k])
+        k += 1
 
-ini = list(input().replace(" ", "_"))
-seq(ini)
+show()
 
-wins = [[0, 4, 8], [2, 4, 6], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8]]
-
-x_win = whowon(ini,"X")
-y_win = whowon(ini,"O")
-
-if abs(ini.count("X") - ini.count("O")) >= 2 or (x_win == 1 and y_win == 1):
-    print("Impossible")
-elif x_win == 1:
-    print("X wins")
-elif y_win == 1:
-    print("O wins")
-elif x_win == 0 and y_win == 0 and ini.count("_") != 0:
-    print("Game not finished")
-else:
-    print("Draw")
+while True:
+    x, y = input("Enter the coordinates: ").split()
+    try:
+        x = int(x)
+        y = int(y)
+        if x < 1 or y > 3 or x < 1 or y > 3:
+            print("Coordinates should be from 1 to 3!")
+        else:
+            if matrix[abs(y-3)][abs(x-1)] == "_":
+                matrix[abs(y-3)][abs(x-1)] = "X"
+                show()
+                break
+            else:
+                print("This cell is occupied! Choose another one!")
+    except:
+        print("You should enter numbers!")
