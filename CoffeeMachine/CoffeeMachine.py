@@ -5,11 +5,6 @@ beans = 120
 cups = 9
 
 
-class ResourceError(Exception):
-    pass
-
-
-
 def print_state():
     print()
     print('The coffee machine has:')
@@ -38,19 +33,21 @@ def select_flavor() -> int:
 
 
 def is_enough(need_water=0, need_milk=0, need_beans=0):
+    Status = False
     if water < need_water:
         print('Sorry, not enough water!\n')
-
+        Status = True
     if milk < need_milk:
         print('Sorry, not enough milk!\n')
-
+        Status = True
     if beans < need_beans:
         print('Sorry, not enough beans!\n')
-
+        Status = True
     if cups < 1:
         print('Sorry, not enough cups\n')
+        Status = True
+    return Status
 
-    print('I have enough resources, making you a coffee!\n')
 
 
 def buy():
@@ -62,34 +59,35 @@ def buy():
         if flavor == 0:
             pass
         elif flavor == 1:  # espresso
-            is_enough(need_water=250, need_beans=16)
-
-            money += 4
-            water -= 250
-            beans -= 16
-            cups -= 1
+            Status = is_enough(need_water=250, need_beans=16)
+            if Status == False:
+                money += 4
+                water -= 250
+                beans -= 16
+                cups -= 1
+                print('I have enough resources, making you a coffee!\n')
         elif flavor == 2:  # latte
-            is_enough(need_water=350, need_milk=75, need_beans=20)
-
-            money += 7
-            water -= 350
-            milk -= 75
-            beans -= 20
-            cups -= 1
+            Status = is_enough(need_water=350, need_milk=75, need_beans=20)
+            if Status == False:
+                money += 7
+                water -= 350
+                milk -= 75
+                beans -= 20
+                cups -= 1
+                print('I have enough resources, making you a coffee!\n')
         elif flavor == 3:  # cappuccino
-            is_enough(need_water=200, need_milk=100, need_beans=12)
-
-            money += 6
-            water -= 200
-            milk -= 100
-            beans -= 12
-            cups -= 1
+            Status = is_enough(need_water=200, need_milk=100, need_beans=12)
+            if Status == False:
+                money += 6
+                water -= 200
+                milk -= 100
+                beans -= 12
+                cups -= 1
+                print('I have enough resources, making you a coffee!\n')
         else:
             print(f'Unknown flavor{flavor}')
-    except ResourceError:
-        pass
-
-
+    except:
+        print("Error")
 
 
 def fill():
@@ -133,12 +131,5 @@ def main():
             print(f'Unknown command {action}')
 
 
-
-
-
-
-
-
-
-
-
+if __name__=="__main__":
+    main()
