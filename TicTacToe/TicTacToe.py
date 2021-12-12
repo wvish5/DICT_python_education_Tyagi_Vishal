@@ -1,31 +1,37 @@
-a = input("Enter cells:")
-print("---------")
-print("|", a[0], a[1], a[2], "|")
-print("|", a[3], a[4], a[5], "|")
-print("|", a[6], a[7], a[8], "|")
-print("---------")
-n = a.count('X')
-b = a.count('O')
-c = a.count('_')
-if a[0] == a[1] == a[2] and (a[3] == a[4] == a[5] or a[6] == a[7] == a[8]) or \
-        a[0] == a[3] == a[6] and (a[1] == a[4] == a[7] or a[2] == a[5] == a[8]) or \
-        a[3] == a[4] == a[5] and a[6] == a[7] == a[8] or \
-        a[1] == a[4] == a[7] and a[2] == a[5] == a[8]:
-    print("Impossible")
-elif abs(n-b)>1:
-    print("Impossible")
-elif a[0] == a[1] == a[2] or a[0] == a[4] == a[8] or a[0] == a[3] == a[6]:
-    print(a[0], "wins")
-elif a[1] == a[4] == a[7] or a[3] == a[4] == a[5]:
-    print(a[4], "wins")
-elif a[6] == a[7] == a[8] or a[6] == a[4] == a[2]:
-    print(a[6], "wins")
-elif a[2] == a[5] == a[8]:
-    print(a[2], "wins")
-else:
-    if abs(n-b)>1:
-        print("Impossible2")
-    if "_" in a:
-        print("Game not finished")
-    else:
-        print("Draw")
+user_input = list(input("Enter cells: "))
+matrix = []
+k = 0
+def show():
+    global matrix
+    print("---------")
+    for i in range(0, 3):
+        print("|", end="")
+        for j in range(0, 3):
+            print(" " + matrix[i][j], end="")
+        print(" |")
+    print("---------")
+
+for i in range (0,3):
+    matrix.append([])
+    for j in range (0,3):
+        matrix[i].append(user_input[k])
+        k += 1
+
+show()
+
+while True:
+    x, y = input("Enter the coordinates: ").split()
+    try:
+        x = int(x)
+        y = int(y)
+        if x < 1 or y > 3 or x < 1 or y > 3:
+            print("Coordinates should be from 1 to 3!")
+        else:
+            if matrix[abs(y-3)][abs(x-1)] == "_":
+                matrix[abs(y-3)][abs(x-1)] = "X"
+                show()
+                break
+            else:
+                print("This cell is occupied! Choose another one!")
+    except:
+        print("You should enter numbers!")
