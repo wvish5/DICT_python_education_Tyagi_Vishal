@@ -1,12 +1,17 @@
 a = list(" " * 9)
 step = 0
+win = False
+
+
 def printgame():
     print('-' * 9)
     for i in range(3):
         print("| {} {} {} |".format(a[0 + 3 * i], a[1 + 3 * i], a[2 + 3 * i]))
     print('-' * 9)
-while " " in a:
-    playx, playy = input("Enter the coordinates:").split()
+
+
+def game_rules():
+    global step, win
     if (int(playx) or int(playy)) not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
         print("You should enter numbers!")
     elif (int(playx) or int(playy)) not in [1, 2, 3]:
@@ -24,8 +29,27 @@ while " " in a:
         rule = [a[:3], a[3:6], a[6:], a[0:9:3], a[1:9:3], a[2:9:3], a[0:9:4], a[2:7:2]]
         if ['X', 'X', 'X'] in rule:
             print("X wins")
+            win = True
         elif ['O', 'O', 'O'] in rule:
             print("O wins")
+            win = True
         elif a.count(" ") == 0:
             print("Draw")
+
+
+if __name__ == "__main__":
+    while " " in a:
+        A = input("Enter the coordinates:")
+        B = A.split()
+        print(B)
+        if len(B) == 2:
+            playx = B[0]
+            playy = B[1]
+        else:
+            print("Enter 2 numbers!")
+            continue
+        game_rules()
+        if win:
+            break
+
 
