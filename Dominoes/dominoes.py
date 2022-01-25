@@ -22,7 +22,8 @@ def domino_snake():
                 max_player = player[j]
                 exseption += 1
     if exseption == 0:
-        main()
+        definite()
+        domino_snake()
     else:
         if max_computer[0]>max_player[0]:
             snake.append(max_computer)
@@ -45,6 +46,7 @@ def main():
     finish()
     if status=="computer":
         print("\nStatus: Computer is about to make a move. Press Enter to continue...")
+        a = input()
         computer_move()
     else:
         print("\nStatus: It's your turn to make a move. Enter your command.")
@@ -52,23 +54,35 @@ def main():
 
 def player_move():
     global status
-    move = input()
+    movep = input()
     try:
-        move = int(move)
+        movep = int(movep)
     except ValueError:
         print("Invalid input. Please try again.")
         player_move()
-
-    if 0<abs(move)<=len(player):
-        if "-" in str(move-1):
-            snake.insert(0, player[abs(move)-1])
-            a = player[abs(move)-1]
-            player.remove(a)
-        elif "-" not in str(move-1):
-            snake.append(player[move-1])
-            a = player[move-1]
-            player.remove(a)
-    elif move==0:
+    if 0<abs(movep)<=len(player):
+        move = player[abs(movep)-1] if movep!=0 else movep
+        if "-" in str(movep-1):
+            if move[0]==snake[0][0] or move[1]==snake[0][0]:
+                if move[1]!=snake[0][0]:
+                    move[0], move[1] = move[1], move[0]
+                snake.insert(0, player[abs(movep)-1])
+                a = player[abs(movep)-1]
+                player.remove(a)
+            else:
+                print("Illegal move. Please try again.")
+                player_move()
+        elif "-" not in str(movep):
+            if move[0]==snake[-1][1] or move[1]==snake[-1][1]:
+                if move[0]!=snake[-1][1]:
+                    move[0], move[1] = move[1], move[0]
+                snake.append(player[movep-1])
+                a = player[movep-1]
+                player.remove(a)
+            else:
+                print("Illegal move. Please try again.")
+                player_move()
+    elif movep==0:
         a = random.choice(stock)
         player.append(a)
         stock.remove(a)
@@ -80,17 +94,23 @@ def player_move():
 
 def computer_move():
     global status
-    a = input()
-    move = random.randint(-len(computer), len(computer))
-    if "-" in str(move) and move!=0:
-        snake.insert(0, computer[abs(move)-1])
-        a = computer[abs(move)-1]
-        computer.remove(a)
-    elif "-" not in str(move) and move!=0:
-        snake.append(computer[move-1])
-        a = computer[move-1]
-        computer.remove(a)
-    elif move==0:
+    movec = random.randint(-len(computer), len(computer))
+    move = computer[abs(movec)-1] if movec!=0 else movec
+    if "-" in str(movec) and movec!=0:
+        if move[0]==snake[0][0] or move[1]==snake[0][0]:
+            if move[1]!=snake[0][0]:
+                move[0], move[1] = move[1], move[0]
+            snake.insert(0, move)
+            computer.remove(move)
+        else:
+            computer_move()
+    elif "-" not in str(movec) and movec!=0:
+        if move[0]==snake[-1][1] or move[1]==snake[-1][1]:
+            if move[0]!=snake[-1][1]:
+                move[0], move[1] = move[1], move[0]
+        snake.append(move)
+        computer.remove(move)
+    elif movec==0:
         a = random.choice(stock)
         computer.append(a)
         stock.remove(a)
