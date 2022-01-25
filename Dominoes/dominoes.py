@@ -34,11 +34,15 @@ def domino_snake():
 
 def main():
     definite()
+    print("="*70)
     status = "player" if len(computer)==6 else "computer"
-    print(f"Stock pieces: {stock}\n"
-          f"Computer pieces: {computer}\n"
-          f"Player pieces: {player}\n"
-          f"Domino snake: {snake}\n"
-          f"Status: {status}")
-
+    print(f"Stock pieces: {len(stock)}\n"
+          f"Computer pieces: {len(computer)}\n\n"
+          f"{snake[0]}\n")
+    for i in range(len(player)):
+        print(f"{str(i+1)}:{player[i]}")
+    if status=="computer":
+        print("Status: Computer is about to make a move. Press Enter to continue...")
+    else:
+        print("Status: It's your turn to make a move. Enter your command.")
 main()
