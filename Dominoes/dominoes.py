@@ -1,4 +1,5 @@
 import random
+from itertools import chain
 
 def definite():
     global stock, computer, player, snake
@@ -47,6 +48,7 @@ def main():
     if status=="computer":
         print("\nStatus: Computer is about to make a move. Press Enter to continue...")
         a = input()
+        computer_clever_choice()
         computer_move()
     else:
         print("\nStatus: It's your turn to make a move. Enter your command.")
@@ -93,17 +95,16 @@ def player_move():
     main()
 
 def computer_move():
-    global status
-    movec = random.randint(-len(computer), len(computer))
-    move = computer[abs(movec)-1] if movec!=0 else movec
+    global status, sorted_dict
+    a = 0
+    movec = sorted(sorted_dict.keys())
+    move = computer[movec[a]]
     if "-" in str(movec) and movec!=0:
         if move[0]==snake[0][0] or move[1]==snake[0][0]:
             if move[1]!=snake[0][0]:
                 move[0], move[1] = move[1], move[0]
             snake.insert(0, move)
             computer.remove(move)
-        else:
-            computer_move()
     elif "-" not in str(movec) and movec!=0:
         if move[0]==snake[-1][1] or move[1]==snake[-1][1]:
             if move[0]!=snake[-1][1]:
@@ -114,8 +115,28 @@ def computer_move():
         a = random.choice(stock)
         computer.append(a)
         stock.remove(a)
+    else:
+        a += 1
+        computer_move()
     status = "player"
     main()
+
+def computer_clever_choice():
+    global sorted_dict
+    count = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+    for num in chain(computer, snake):
+        count[num[0]] += 1
+        count[num[1]] += 1
+    scores = {}
+    for i in range(len(computer)):
+        scores[i] = count.get(computer[i][0])+count.get(computer[i][1])
+    sorted_values = sorted(scores.values()) # Sort the values
+    sorted_dict = {}
+    for i in sorted_values:
+        for k in scores.keys():
+            if scores[k] == i:
+                sorted_dict[k] = scores[k]
+                break
 
 def finish():
     if len(snake)>4:
